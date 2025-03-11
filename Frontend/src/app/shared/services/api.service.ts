@@ -69,4 +69,15 @@ export class ApiService {
   getBooks(): Observable<Book[]> {
     return this.http.get<Book[]>(this.baseUrl + 'GetBooks');
   }
+
+  OrderBook(book: Book): Observable<string> {
+    let userId = this.GetUserInfo()!.id;
+    let param = new HttpParams()
+      .append('userId', userId)
+      .append('bookId', book.id);
+    return this.http.post(this.baseUrl + 'OrderBook', null, {
+      params: param,
+      responseType: 'text',
+    });
+  }
 }

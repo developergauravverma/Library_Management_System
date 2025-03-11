@@ -81,6 +81,31 @@ namespace Backend.Controllers
                 return Ok(_appDbContext.Books.Include(j => j.BookCategory).ToList());
             }
             return NotFound();
-        } 
+        }
+        [HttpPost("OrderBook")]
+        public ActionResult OrderBook(int userId, int bookId)
+        {
+            bool canOrder = _appDbContext.Orders.Count(o => o.UserId.Equals(userId) && !o.Returned) < 3;
+            if(canOrder){
+                _appDbContext.Orders.Add(new(){
+                    UserId = userId,
+                    BookId = bookId,
+                    OrderDate = DateTime.Now,
+                    ReturnDate = null,
+                    Returned = false,
+                    FinePaid = 0
+                });
+
+                Book book = _appDbContext.Books.FirstOrDefault(x => x.Id.Equals(bookId))!;
+                if(book is not null){
+                    book.Ordered = true;
+                }
+
+                _appDbContext.SaveChanges();
+
+                return Ok("Ordered");
+            }
+            return Ok("cannot order");
+        }
     }
 }
