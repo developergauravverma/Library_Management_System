@@ -1,0 +1,55 @@
+:host {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  width: 90%;
+}
+
+.register-form {
+  width: 600px;
+
+  mat-card-header {
+    display: flex;
+    justify-content: center;
+
+    mat-card-title {
+      font-size: 2rem;
+    }
+  }
+
+  mat-card {
+    mat-grid-tile {
+      mat-form-field {
+        width: 100%;
+      }
+    }
+  }
+
+  mat-card-actions {
+    button {
+      margin: auto;
+      width: 80%;
+    }
+    h4{
+      margin: 0;
+      padding-right: 1rem ;
+    }
+  }
+}
+
+.library-info {
+  padding-left: 1rem;
+  width: 400px;
+  border-left: 1px solid wheat;
+
+  mat-list-item {
+    height: auto;
+
+    p {
+      white-space: normal;
+      font-size: 1.2rem;
+      font-style: italic;
+      text-align: justify;
+    }
+  }
+}

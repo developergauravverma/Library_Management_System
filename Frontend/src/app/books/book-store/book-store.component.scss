@@ -1,0 +1,32 @@
+:host {
+  display: block;
+  padding: 1rem 0;
+}
+
+mat-form-field {
+  width: 500px;
+  margin: 0 auto;
+  display: block;
+}
+
+mat-card {
+  width: max-content;
+  margin-bottom: 1rem;
+
+  mat-card-content {
+    font-size: 1.5rem;
+  }
+}
+
+mat-accordion {
+  mat-panel-title {
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    font-weight: 500;
+  }
+  mat-panel-description {
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    letter-spacing: 1px;
+  }
+}

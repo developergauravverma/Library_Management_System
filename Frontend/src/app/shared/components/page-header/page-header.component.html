@@ -1,0 +1,13 @@
+<mat-toolbar color="primary">
+  <span>Libary Management System</span>
+  <span class="spacer"></span>
+  <div class="user-info">
+    @if(loggedIn){
+    <div class="name">Hi, {{ name }}</div>
+    }
+    <button mat-raised-button filled-container-color="red" class="profile">
+      Profile
+    </button>
+    <button mat-raised-button class="logout" (click)="logout()">Log Out</button>
+  </div>
+</mat-toolbar>
