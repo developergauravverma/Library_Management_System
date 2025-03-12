@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable, Subject } from 'rxjs';
-import { Book, User, UserType } from '../../models/models';
+import { map, Observable, Subject } from 'rxjs';
+import { Book, Order, User, UserType } from '../../models/models';
 
 export interface loginParam {
   email: string;
@@ -55,7 +55,7 @@ export class ApiService {
       mobileNumber: decodedToken.mobileNumber,
       userType: UserType[decodedToken.userType as keyof typeof UserType],
       accountStatus: decodedToken.accountStatus,
-      createOn: decodedToken.createOn,
+      createOn: decodedToken.createdOn,
       password: '',
     };
     return user;
@@ -68,5 +68,55 @@ export class ApiService {
 
   getBooks(): Observable<Book[]> {
     return this.http.get<Book[]>(this.baseUrl + 'GetBooks');
+  }
+
+  OrderBook(book: Book): Observable<string> {
+    let userId = this.GetUserInfo()!.id;
+    let param = new HttpParams()
+      .append('userId', userId)
+      .append('bookId', book.id);
+    return this.http.post(this.baseUrl + 'OrderBook', null, {
+      params: param,
+      responseType: 'text',
+    });
+  }
+
+  GetOrdersOfUser(userId: number) {
+    let param = new HttpParams().append('userId', userId);
+    return this.http
+      .get<any>(this.baseUrl + 'GetOrdersOfUser', {
+        params: param,
+      })
+      .pipe(
+        map((orders) => {
+          let newOrders = orders.map((order: any) => {
+            let newOrder: Order = {
+              id: order.id,
+              userId: order.userId,
+              userName: `${order.user.firstName} ${order.user.lastName}`,
+              bookId: order.bookId,
+              bookTitle: order.book.title,
+              orderDate: order.orderDate,
+              returned: order.returned,
+              returnDate: order.returned,
+              finePaid: order.finePaid,
+            };
+            return newOrder;
+          });
+          return newOrders;
+        })
+      );
+  }
+
+  GetFineToPay(order: Order): number {
+    let today = new Date();
+    let orderDate = new Date(Date.parse(order.orderDate));
+    orderDate.setDate(orderDate.getDate() + 10);
+    if (orderDate.getTime() < today.getTime()) {
+      let diff = today.getTime() - orderDate.getTime();
+      let days = Math.floor(diff / (1000 * 86400));
+      return days * 50;
+    }
+    return 0;
   }
 }

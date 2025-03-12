@@ -75,4 +75,28 @@ export class BookStoreComponent {
     this.booksToDisplay.forEach((book) => (count += book.books.length));
     return count;
   }
+
+  OrderBook(book: Book) {
+    this.api.OrderBook(book).subscribe({
+      next: (res) => {
+        if (res === 'Ordered') {
+          book.ordered = true;
+          let today = new Date();
+          let returnDate = today;
+          returnDate.setDate(today.getDate() + 10);
+          this.snackbar.open(
+            `${
+              book.title
+            } has been ordered!. you will have to returned on ${returnDate.toDateString()}`,
+            'Ok'
+          );
+        } else {
+          this.snackbar.open(
+            'You Already have 3 orders panding to return.',
+            'Ok'
+          );
+        }
+      },
+    });
+  }
 }

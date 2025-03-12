@@ -1,4 +1,3 @@
-
 export interface User {
   id: number;
   firstName: string;
@@ -23,10 +22,10 @@ export enum UserType {
   STUDENT,
 }
 
-export interface BookCategory{
-  id:number;
+export interface BookCategory {
+  id: number;
   category: string;
-  subCategory: string
+  subCategory: string;
 }
 
 export interface Book {
@@ -44,4 +43,16 @@ export interface BooksByCategory {
   category: string;
   subCategory: string;
   books: Book[];
+}
+
+export interface Order {
+  id: number;
+  userId: number;
+  userName: string | null;
+  bookId: number;
+  bookTitle: string;
+  orderDate: string;
+  returned: boolean;
+  returnDate: string | null;
+  finePaid: number;
 }

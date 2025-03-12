@@ -1,1 +1,86 @@
-<p>user-orders works!</p>
+<section class="pending">
+  <mat-card>
+    <mat-card-header>
+      <h2>Pending returns ({{ pendingReturns.length }})</h2>
+    </mat-card-header>
+  </mat-card>
+
+  <table mat-table [dataSource]="pendingReturns">
+    <ng-container matColumnDef="orderId">
+      <th mat-header-cell *matHeaderCellDef>Order Id</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="bookId">
+      <th mat-header-cell *matHeaderCellDef>Book Id</th>
+      <td mat-cell *matCellDef="let element">{{ element.bookId }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="bookTitle">
+      <th mat-header-cell *matHeaderCellDef>Book Title</th>
+      <td mat-cell *matCellDef="let element">{{ element.bookTitle }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="orderDate">
+      <th mat-header-cell *matHeaderCellDef>Order Date</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.orderDate | date : "dd-MMM-YYYY" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fineToPay">
+      <th mat-header-cell *matHeaderCellDef>Fine To Pay</th>
+      <td mat-cell *matCellDef="let element">{{ getFineToPay(element) }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsForPendingReturns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsForPendingReturns"></tr>
+  </table>
+</section>
+
+<section class="returned">
+  <mat-card>
+    <mat-card-header>
+      <h2>Returned orders ({{ completedReturns.length }})</h2>
+    </mat-card-header>
+  </mat-card>
+
+  <table mat-table [dataSource]="completedReturns">
+    <ng-container matColumnDef="orderId">
+      <th mat-header-cell *matHeaderCellDef>Order Id</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="bookId">
+      <th mat-header-cell *matHeaderCellDef>Book Id</th>
+      <td mat-cell *matCellDef="let element">{{ element.bookId }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="bookTitle">
+      <th mat-header-cell *matHeaderCellDef>Book Title</th>
+      <td mat-cell *matCellDef="let element">{{ element.bookTitle }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="orderDate">
+      <th mat-header-cell *matHeaderCellDef>Order Date</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.orderDate | date : "dd-MMM-YYYY" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="returnDate">
+      <th mat-header-cell *matHeaderCellDef>Return Date</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.returnDate | date : "dd-MMM-YYYY" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fineToPay">
+      <th mat-header-cell *matHeaderCellDef>Fine To Pay</th>
+      <td mat-cell *matCellDef="let element">{{ element.fineToPay }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsForCompletedReturns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsForCompletedReturns"></tr>
+  </table>
+</section>
