@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map, Observable, Subject } from 'rxjs';
-import { Book, Order, User, UserType } from '../../models/models';
+import { Book, BookCategory, Order, User, UserType } from '../../models/models';
 
 export interface loginParam {
   email: string;
@@ -118,5 +118,21 @@ export class ApiService {
       return days * 50;
     }
     return 0;
+  }
+
+  AddNewCategory(category: BookCategory): Observable<string> {
+    return this.http.post(this.baseUrl + 'AddNewCategory', category, {
+      responseType: 'text',
+    });
+  }
+
+  GetBookCategory(): Observable<BookCategory[]> {
+    return this.http.get<BookCategory[]>(this.baseUrl + 'GetBookCategory');
+  }
+
+  AddNewBook(book: Book): Observable<string> {
+    return this.http.post(this.baseUrl + 'AddNewBook', book, {
+      responseType: 'text',
+    });
   }
 }

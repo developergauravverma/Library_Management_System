@@ -120,5 +120,36 @@ namespace Backend.Controllers
             else
                 return NotFound();
         }
+        [Authorize]
+        [HttpPost("AddNewCategory")]
+        public ActionResult AddNewCategory(BookCategory bc){
+            var exists = _appDbContext.BookCategories.Any(b => b.Category.Equals(bc.Category) && b.SubCategory.Equals(bc.SubCategory));
+            if(exists)
+            {
+                return Ok("cannot insert");
+            }
+            else
+            {
+                _appDbContext.BookCategories.Add(bc);
+                _appDbContext.SaveChanges();
+                return Ok("Inserted");
+            }
+        }
+        [Authorize]
+        [HttpGet("GetBookCategory")]
+        public ActionResult GetBookCategory()
+        {
+            var bookCategory = _appDbContext.BookCategories.ToList();
+            return Ok(bookCategory);
+        }
+
+        [Authorize]
+        [HttpPost("AddNewBook")]
+        public ActionResult AddNewBook(Book book)
+        {
+            _appDbContext.Books.Add(book);
+            _appDbContext.SaveChanges();
+            return Ok("Inserted");
+        }
     }
 }
