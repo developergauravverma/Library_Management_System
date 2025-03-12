@@ -82,6 +82,7 @@ namespace Backend.Controllers
             }
             return NotFound();
         }
+        [Authorize]
         [HttpPost("OrderBook")]
         public ActionResult OrderBook(int userId, int bookId)
         {
@@ -106,6 +107,18 @@ namespace Backend.Controllers
                 return Ok("Ordered");
             }
             return Ok("cannot order");
+        }
+        [Authorize]
+        [HttpGet("GetOrdersOfUser")]
+        public ActionResult GetOrdersOfUser(int userId){
+            var orders = _appDbContext.Orders
+            .Include(u => u.User)
+            .Include(b => b.Book)
+            .Where(x => x.UserId.Equals(userId));
+            if(orders.Any())
+                return Ok(orders);
+            else
+                return NotFound();
         }
     }
 }
