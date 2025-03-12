@@ -29,6 +29,7 @@ namespace Backend.Services
                 new Claim("firstName", user.FirstName),
                 new Claim("lastName", user.LastName),
                 new Claim("email", user.Email),
+                new Claim("mobileNumber", user.MobileNumber),
                 new Claim("userType", user.UserType.ToString()),
                 new Claim("accountStatus", user.AccountStatus.ToString()),
                 new Claim("createdOn", user.CreatedOn.ToString()),
