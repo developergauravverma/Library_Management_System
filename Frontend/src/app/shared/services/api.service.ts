@@ -135,4 +135,11 @@ export class ApiService {
       responseType: 'text',
     });
   }
+
+  DeleteBookApi(bookId: number): Observable<string> {
+    return this.http.delete(this.baseUrl + 'DeleteBooks', {
+      params: new HttpParams().append('bookId', bookId),
+      responseType: 'text',
+    });
+  }
 }

@@ -151,5 +151,19 @@ namespace Backend.Controllers
             _appDbContext.SaveChanges();
             return Ok("Inserted");
         }
+
+        [Authorize]
+        [HttpDelete("DeleteBooks")]
+        public ActionResult DeleteBooks(int bookId){
+            bool exists = _appDbContext.Books.Any(x => x.Id.Equals(bookId));
+            if(exists){
+                Book book = _appDbContext.Books.FirstOrDefault(x => x.Id.Equals(bookId))!;
+                _appDbContext.Books.Remove(book);
+                _appDbContext.SaveChanges();
+                return Ok("deleted");
+            }
+            return NotFound();
+        }
+        
     }
 }

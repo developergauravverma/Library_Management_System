@@ -63,3 +63,24 @@
     </button>
   </mat-card-content>
 </mat-card>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title> Delete Existing Book </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-form-field color="accent">
+      <mat-label>Book Id</mat-label>
+      <input matInput [formControl]="deleteBook" />
+    </mat-form-field>
+    <button
+      mat-stroked-button
+      color="accent"
+      [disabled]="deleteBook.invalid"
+      (click)="deleteBookClick()"
+    >
+      <span>Delete Book</span>
+    </button>
+  </mat-card-content>
+</mat-card>
