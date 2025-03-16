@@ -164,6 +164,23 @@ namespace Backend.Controllers
             }
             return NotFound();
         }
-        
+        [Authorize]
+        [HttpGet("ReturnBook")]
+        public ActionResult ReturnBook(int userId,int bookId, int fine){
+            var order = _appDbContext.Orders.FirstOrDefault(o => o.UserId.Equals(userId) && o.BookId.Equals(bookId));
+            if(order is not null){
+                order.Returned = true;
+                order.ReturnDate = DateTime.Now;
+                order.FinePaid = fine;
+
+                var book = _appDbContext.Books.FirstOrDefault(b => b.Id.Equals(bookId))!;
+                book.Ordered = false;
+
+                _appDbContext.SaveChanges();
+
+                return Ok("returned");
+            }
+            return Ok("not returned");
+        }
     }
 }

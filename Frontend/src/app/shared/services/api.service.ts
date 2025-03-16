@@ -142,4 +142,14 @@ export class ApiService {
       responseType: 'text',
     });
   }
+
+  returnBook(userId: number, bookId: number, fine: number): Observable<string> {
+    return this.http.get(this.baseUrl + 'ReturnBook', {
+      params: new HttpParams()
+        .append('userId', userId)
+        .append('bookId', bookId)
+        .append('fine', fine),
+      responseType: 'text',
+    });
+  }
 }

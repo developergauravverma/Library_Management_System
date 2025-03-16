@@ -1,1 +1,25 @@
-<p>return-book works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Return a Book</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content [formGroup]="returnBook">
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>User Id</mat-label>
+      <input matInput formControlName="userId" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" color="accent">
+      <mat-label>Book Id</mat-label>
+      <input matInput formControlName="bookId" />
+    </mat-form-field>
+
+    <div class="fine">
+      <button mat-stroked-button color="accent" (click)="getFine()">
+        Get Fine
+      </button>
+      <span>{{ fineToPay }} Rs</span>
+    </div>
+
+    <button mat-stroked-button color="accent" (click)="returnBookBtn()">Return Book</button>
+  </mat-card-content>
+</mat-card>
