@@ -24,7 +24,6 @@ import { PageTableComponent } from './components/page-table/page-table.component
     RouterModule,
     ReactiveFormsModule,
     HttpClientModule,
-    PageTableComponent,
   ],
   exports: [
     CommonModule,

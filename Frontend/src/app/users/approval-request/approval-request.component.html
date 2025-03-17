@@ -1,0 +1,13 @@
+<mat-card>
+  <mat-card-content>
+    <mat-card-title
+      >Pending Approval Request ({{ users.length }})</mat-card-title
+    >
+  </mat-card-content>
+</mat-card>
+
+<page-table
+  [columns]="columns"
+  [dataSource]="users"
+  (approve)="approve($event)"
+></page-table>

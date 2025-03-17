@@ -152,4 +152,15 @@ export class ApiService {
       responseType: 'text',
     });
   }
+
+  GetUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.baseUrl + 'GetUsers');
+  }
+
+  ApproveRequest(userId: number): Observable<string> {
+    return this.http.get(this.baseUrl + 'ApproveRequest', {
+      params: new HttpParams().append('userId', userId),
+      responseType: 'text',
+    });
+  }
 }

@@ -182,5 +182,33 @@ namespace Backend.Controllers
             }
             return Ok("not returned");
         }
+        [Authorize]
+        [HttpGet("GetUsers")]
+        public ActionResult GetUsers(){
+            return Ok(_appDbContext.Users.ToList());
+        }
+        [Authorize]
+        [HttpGet("ApproveRequest")]
+        public ActionResult ApproveRequest(int userId){
+            var user = _appDbContext.Users.FirstOrDefault(u => u.Id.Equals(userId))!;
+
+            if(user is not null){
+                if(user.AccountStatus == AccountStatus.UNAPROOVED){
+                    user.AccountStatus = AccountStatus.ACTIVE;
+                    _appDbContext.SaveChanges();
+                    _emailService.SendEmail(user.Email,$"{user.FirstName} Account Approved",$"""
+                        <html>
+                            <body>
+                                <h2>hi, {user.FirstName} {user.LastName}</h2>
+                                <h3>You account approved by admin.</h3>
+                                <h3>Now You can login to your account.</h3>
+                            </body>
+                        </html>
+                    """);
+                    return Ok("approved");
+                }
+            }
+            return Ok("not approved");
+        }
     }
 }
