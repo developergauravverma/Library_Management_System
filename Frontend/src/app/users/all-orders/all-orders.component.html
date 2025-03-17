@@ -1,1 +1,29 @@
-<p>all-orders works!</p>
+
+<mat-card>
+    <mat-card-content>
+        <mat-card-title>
+            Order With Pending Returns ({{ordersWithPendingReturns.length}})
+        </mat-card-title>
+
+        <button mat-raised-button (click)="sendEmail()">Send Email About Pending Returns</button>
+        <button mat-raised-button (click)="blockUser()">Block Overdue Users</button>
+    </mat-card-content>
+
+    <mat-card-footer>
+        @if(showProgressBar){
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        }
+    </mat-card-footer>
+</mat-card>
+
+<page-table [columns]="columnsForPendingReturns" [dataSource]="ordersWithPendingReturns"></page-table>
+
+<mat-card>
+    <mat-card-content>
+        <mat-card-title>
+            Order With Completed Returns ({{ordersWithCompletedResult.length}})
+        </mat-card-title>
+    </mat-card-content>
+</mat-card>
+
+<page-table [columns]="columnsForCompletedResult" [dataSource]="ordersWithCompletedResult"></page-table>
