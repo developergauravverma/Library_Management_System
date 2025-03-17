@@ -40,7 +40,7 @@ export class BookStoreComponent {
         let categoryBook: BooksByCategory | null;
 
         this.booksToDisplay.forEach((bd) => {
-          if (bd.category == book.bookCategory.category) {
+          if (bd.category == book.bookCategory?.category) {
             categoryExists = true;
             categoryBook = bd;
           }
@@ -51,8 +51,8 @@ export class BookStoreComponent {
         } else {
           this.booksToDisplay.push({
             bookCategoryId: book.bookCategoryId,
-            category: book.bookCategory.category,
-            subCategory: book.bookCategory.subCategory,
+            category: book.bookCategory?.category!,
+            subCategory: book.bookCategory?.subCategory!,
             books: [book],
           });
         }

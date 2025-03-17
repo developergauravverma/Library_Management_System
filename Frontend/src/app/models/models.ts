@@ -35,7 +35,7 @@ export interface Book {
   price: number;
   ordered: boolean;
   bookCategoryId: number;
-  bookCategory: BookCategory;
+  bookCategory?: BookCategory | null;
 }
 
 export interface BooksByCategory {

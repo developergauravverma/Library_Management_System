@@ -120,5 +120,95 @@ namespace Backend.Controllers
             else
                 return NotFound();
         }
+        [Authorize]
+        [HttpPost("AddNewCategory")]
+        public ActionResult AddNewCategory(BookCategory bc){
+            var exists = _appDbContext.BookCategories.Any(b => b.Category.Equals(bc.Category) && b.SubCategory.Equals(bc.SubCategory));
+            if(exists)
+            {
+                return Ok("cannot insert");
+            }
+            else
+            {
+                _appDbContext.BookCategories.Add(bc);
+                _appDbContext.SaveChanges();
+                return Ok("Inserted");
+            }
+        }
+        [Authorize]
+        [HttpGet("GetBookCategory")]
+        public ActionResult GetBookCategory()
+        {
+            var bookCategory = _appDbContext.BookCategories.ToList();
+            return Ok(bookCategory);
+        }
+
+        [Authorize]
+        [HttpPost("AddNewBook")]
+        public ActionResult AddNewBook(Book book)
+        {
+            _appDbContext.Books.Add(book);
+            _appDbContext.SaveChanges();
+            return Ok("Inserted");
+        }
+
+        [Authorize]
+        [HttpDelete("DeleteBooks")]
+        public ActionResult DeleteBooks(int bookId){
+            bool exists = _appDbContext.Books.Any(x => x.Id.Equals(bookId));
+            if(exists){
+                Book book = _appDbContext.Books.FirstOrDefault(x => x.Id.Equals(bookId))!;
+                _appDbContext.Books.Remove(book);
+                _appDbContext.SaveChanges();
+                return Ok("deleted");
+            }
+            return NotFound();
+        }
+        [Authorize]
+        [HttpGet("ReturnBook")]
+        public ActionResult ReturnBook(int userId,int bookId, int fine){
+            var order = _appDbContext.Orders.FirstOrDefault(o => o.UserId.Equals(userId) && o.BookId.Equals(bookId));
+            if(order is not null){
+                order.Returned = true;
+                order.ReturnDate = DateTime.Now;
+                order.FinePaid = fine;
+
+                var book = _appDbContext.Books.FirstOrDefault(b => b.Id.Equals(bookId))!;
+                book.Ordered = false;
+
+                _appDbContext.SaveChanges();
+
+                return Ok("returned");
+            }
+            return Ok("not returned");
+        }
+        [Authorize]
+        [HttpGet("GetUsers")]
+        public ActionResult GetUsers(){
+            return Ok(_appDbContext.Users.ToList());
+        }
+        [Authorize]
+        [HttpGet("ApproveRequest")]
+        public ActionResult ApproveRequest(int userId){
+            var user = _appDbContext.Users.FirstOrDefault(u => u.Id.Equals(userId))!;
+
+            if(user is not null){
+                if(user.AccountStatus == AccountStatus.UNAPROOVED){
+                    user.AccountStatus = AccountStatus.ACTIVE;
+                    _appDbContext.SaveChanges();
+                    _emailService.SendEmail(user.Email,$"{user.FirstName} Account Approved",$"""
+                        <html>
+                            <body>
+                                <h2>hi, {user.FirstName} {user.LastName}</h2>
+                                <h3>You account approved by admin.</h3>
+                                <h3>Now You can login to your account.</h3>
+                            </body>
+                        </html>
+                    """);
+                    return Ok("approved");
+                }
+            }
+            return Ok("not approved");
+        }
     }
 }
