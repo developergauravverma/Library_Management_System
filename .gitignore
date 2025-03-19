@@ -1,7 +1,6 @@
 
 Backend/bin/*
 Backend/obj/*
-Backend/appsettings.json
 
 Frontend/.angular/*
 Frontend/node_modules
