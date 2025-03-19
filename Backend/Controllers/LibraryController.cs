@@ -301,5 +301,20 @@ namespace Backend.Controllers
 
             return Ok("blocked");
         }
+        [Authorize]
+        [HttpGet("UnBlock")]
+        public ActionResult UnBlock(int userId){
+            var user  = _appDbContext.Users.FirstOrDefault(u => u.Id.Equals(userId));
+
+            if(user is not null){
+                user.AccountStatus = AccountStatus.ACTIVE;
+
+                _appDbContext.SaveChanges();
+
+                return Ok("unblocked");
+            }
+
+            return Ok("not unblocked");
+        }
     }
 }

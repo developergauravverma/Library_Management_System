@@ -6,8 +6,10 @@ export interface User {
   mobileNumber: string;
   password: string;
   userType: UserType;
+  userTypeString?: string;
   accountStatus: AccountStatus;
   createOn: string;
+  accountStatusString?: string;
 }
 
 export enum AccountStatus {

@@ -18,9 +18,12 @@ export class PageTableComponent {
   @Output()
   approve = new EventEmitter<User>();
 
-  getFineToPay(order:Order):number{
+  @Output()
+  unBlock = new EventEmitter<User>();
+
+  getFineToPay(order: Order): number {
     return this.api.GetFineToPay(order);
   }
 
-  constructor(private api:ApiService){}
+  constructor(private api: ApiService) {}
 }

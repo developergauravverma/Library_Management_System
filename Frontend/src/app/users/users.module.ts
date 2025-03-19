@@ -4,6 +4,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ProfileComponent } from './profile/profile.component';
 import { ApprovalRequestComponent } from './approval-request/approval-request.component';
 import { AllOrdersComponent } from './all-orders/all-orders.component';
+import { ViewUsersComponent } from './view-users/view-users.component';
 
 @NgModule({
   declarations: [
@@ -11,6 +12,7 @@ import { AllOrdersComponent } from './all-orders/all-orders.component';
     ProfileComponent,
     ApprovalRequestComponent,
     AllOrdersComponent,
+    ViewUsersComponent,
   ],
   imports: [SharedModule],
 })
