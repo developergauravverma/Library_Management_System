@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { User } from '../../../models/models';
+import { Order, User } from '../../../models/models';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'page-table',
@@ -12,8 +13,17 @@ export class PageTableComponent {
   columns: string[] = [];
 
   @Input()
-  dataSource: User[] = [];
+  dataSource: any[] = [];
 
   @Output()
   approve = new EventEmitter<User>();
+
+  @Output()
+  unBlock = new EventEmitter<User>();
+
+  getFineToPay(order: Order): number {
+    return this.api.GetFineToPay(order);
+  }
+
+  constructor(private api: ApiService) {}
 }

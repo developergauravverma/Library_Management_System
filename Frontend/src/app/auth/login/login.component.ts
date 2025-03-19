@@ -40,6 +40,8 @@ export class LoginComponent {
           this.snackBar.open('Credential are invalid!', 'Ok');
         else if (res == 'unaproved')
           this.snackBar.open('Your account is not approved by Admin!', 'Ok');
+        else if (res == 'blocked')
+          this.snackBar.open('Your account is BLOCKED now. Please got to admin office to UNBLOCK.!', 'Ok');
         else {
           localStorage.setItem('access_token', res);
           this.api.userStatus.next('loggedIn');

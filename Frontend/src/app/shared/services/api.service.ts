@@ -163,4 +163,45 @@ export class ApiService {
       responseType: 'text',
     });
   }
+
+  GetOrders(): Observable<Order[]> {
+    return this.http.get<any>(this.baseUrl + 'GetOrders').pipe(
+      map((orders) => {
+        let newOrders = orders.map((order: any) => {
+          let newOrder: Order = {
+            id: order.id,
+            userId: order.userId,
+            userName: `${order.user.firstName} ${order.user.lastName}`,
+            bookId: order.bookId,
+            bookTitle: order.book.title,
+            orderDate: order.orderDate,
+            returned: order.returned,
+            returnDate: order.returned,
+            finePaid: order.finePaid,
+          };
+          return newOrder;
+        });
+        return newOrders;
+      })
+    );
+  }
+
+  SendEmail(): Observable<string> {
+    return this.http.get(this.baseUrl + 'SendEmailForPendingReturns', {
+      responseType: 'text',
+    });
+  }
+
+  BlockUser(): Observable<string> {
+    return this.http.get(this.baseUrl + 'BlockFineOverDueUsers', {
+      responseType: 'text',
+    });
+  }
+
+  UnBlock(userId: number): Observable<string> {
+    return this.http.get(this.baseUrl + 'UnBlock', {
+      params: new HttpParams().append('userId', userId),
+      responseType: 'text',
+    });
+  }
 }
